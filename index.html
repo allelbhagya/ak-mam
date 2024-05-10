@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>hello flowers!</title>
+<style>
+    *{
+        font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    }
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-image: url('back.jpeg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        font-size: 50px; 
+        color: rgb(0, 0, 0);
+        position: relative;
+    }
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    #counter {
+        font-size: 30px;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        padding: 10px;
+        background-color: rgba(255, 255, 255, 0.7);
+        border-radius: 5px;
+    }
+    .flower {
+        position: absolute;
+        cursor: pointer;
+        animation: drift 10s linear infinite;
+    }
+    .message {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    @keyframes drift {
+        0% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-50px);
+        }
+        100% {
+            transform: translateY(0);
+        }
+    }
+</style>
+</head>
+<body>
+    <div id="counter">click all the flowers! <br> remaining: 8</div>
+    <div class="message" id="message">you clicked all the flowers.</div>
+    
+    <div class="container">
+        <script>
+            const counter = document.getElementById('counter');
+            const message = document.getElementById('message');
+            let flowerCount = 8;
+
+            function createFlower() {
+                const emojis = ['💐', '🌸', '💮', '🪷', '🏵️', '🌹', '🥀', '🌺', '🌻', '🌼', '🌷', '🪻'];
+                const flower = document.createElement('span');
+                flower.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+                flower.classList.add('flower');
+                flower.style.top = `${Math.random() * 80}%`;
+                flower.style.left = `${Math.random() * 80}%`;
+                flower.onclick = function() {
+                    this.remove();
+                    flowerCount--;
+                    counter.textContent = `remaining: ${flowerCount}`;
+                    if (flowerCount === 0) {
+                        message.style.display = 'block';
+                    }
+                };
+                document.querySelector('.container').appendChild(flower);
+            }
+
+            for (let i = 0; i < 8; i++) {
+                createFlower();
+            }
+        </script>
+    </div>
+</body>
+</html>
